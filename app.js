@@ -22,7 +22,7 @@ if (!config.get('jwtPrivateKey')){
 }
 
 // mongoDB Setup and Connection
-const dbRoute = config.get('db');
+const dbRoute = 'mongodb+srv://yaumil:yaumil@cluster0-usacc.gcp.mongodb.net/test?retryWrites=true';
 
 mongoose.connect( dbRoute, { useNewUrlParser: true } );
 
