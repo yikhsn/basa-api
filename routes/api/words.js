@@ -83,8 +83,83 @@ router.get('/search/:query', auth, asyncMiddleware( async(req, res) => {
     res.send(word);
 }));
 
-// spatial search route method
-router.get('/search/text/:query', auth, asyncMiddleware( async(req, res) => {
+// spatial search word that start with certain letter route method
+router.get('/search/startwith/:query', auth, asyncMiddleware( async(req, res) => {
+    const q = req.params.query;
+    
+    const word = await Word.find( { 
+        "words": {
+            "$regex": new RegExp("^" + q)
+        } 
+    });
+
+    if (!word.length) return res.status(404).send('The given query not found');
+
+    res.send(word)
+}));
+
+// spatial search word that start with certain letter with [10] limit route method
+router.get('/search/startwith10/:query', auth, asyncMiddleware( async(req, res) => {
+    const q = req.params.query;
+    
+    const word = await Word.find( { 
+        "words": {
+            "$regex": new RegExp("^" + q)
+        } 
+    }).limit(10);
+
+    if (!word.length) return res.status(404).send('The given query not found');
+
+    res.send(word)
+}));
+
+// spatial search word that start with certain letter with [20] limit route method
+router.get('/search/startwith20/:query', auth, asyncMiddleware( async(req, res) => {
+    const q = req.params.query;
+    
+    const word = await Word.find( { 
+        "words": {
+            "$regex": new RegExp("^" + q)
+        } 
+    }).limit(20);
+
+    if (!word.length) return res.status(404).send('The given query not found');
+
+    res.send(word)
+}));
+
+// spatial search word that contain certai letter route method
+router.get('/search/contain/:query', auth, asyncMiddleware( async(req, res) => {
+    const q = req.params.query;
+    
+    const word = await Word.find( { 
+        "words": {
+            "$regex": new RegExp(q, 'i')
+        } 
+    });
+
+    if (!word.length) return res.status(404).send('The given query not found');
+
+    res.send(word)
+}));
+
+// spatial search word that contain certai letter with limit [20] route method
+router.get('/search/contain20/:query', auth, asyncMiddleware( async(req, res) => {
+    const q = req.params.query;
+    
+    const word = await Word.find( { 
+        "words": {
+            "$regex": new RegExp(q, 'i')
+        } 
+    }).limit(20);
+
+    if (!word.length) return res.status(404).send('The given query not found');
+
+    res.send(word)
+}));
+
+// spatial search word that contain certai letter with limit [20] route method
+router.get('/search/contain10/:query', auth, asyncMiddleware( async(req, res) => {
     const q = req.params.query;
     
     const word = await Word.find( { 
