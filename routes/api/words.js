@@ -173,4 +173,22 @@ router.get('/search/contain10/:query', auth, asyncMiddleware( async(req, res) =>
     res.send(word)
 }));
 
+///////// ENDPOINT TO ALL APPS ///////////////
+
+
+// spatial search word that contain certai letter with limit [20] route method
+router.get('/search/text/:query', auth, asyncMiddleware( async(req, res) => {
+    const q = req.params.query;
+    
+    const word = await Word.find( { 
+        "words": {
+            "$regex": new RegExp(q, 'i')
+        } 
+    }).limit(20);
+
+    if (!word.length) return res.status(404).send('The given query not found');
+
+    res.send(word)
+}));
+
 module.exports = router;
