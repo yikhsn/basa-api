@@ -184,7 +184,7 @@ router.get('/search/text/:query', auth, asyncMiddleware( async(req, res) => {
         "words": {
             "$regex": new RegExp(q, 'i')
         } 
-    }).limit(20);
+    });
 
     if (!word.length) return res.status(404).send('The given query not found');
 
